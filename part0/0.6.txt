@@ -1,0 +1,29 @@
+note over browser:
+user input data in form
+and submits the form
+end note
+
+note over browser:
+code to handle form submit event
+e.preventDefault() to prevent page load
+end note
+
+note over browser:
+event handler creates a new note
+end note
+
+note over browser:
+event handler adds note to list
+end note
+
+note over browser:
+event handler rerenders note list
+end note
+
+note over browser:
+input is formatted as json
+and sent to server with headers
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: HTTP status code 201 (created)
