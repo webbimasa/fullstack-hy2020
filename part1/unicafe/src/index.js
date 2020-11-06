@@ -6,60 +6,71 @@ const Button = ({text, onClick}) => {
         <button onClick={onClick}>{text}</button>
     )
 }
-const Calculator = (props) => {
-    if (isNaN(props.calc)) {
-        return (
-            <p>{props.label}: 0</p>
-        )
-    }
+const Statistics = ({stats}) => {
     return (
-        <p>{props.label}: {props.calc} {props.unit}</p>
+        <div>
+            <h2>Statistics</h2>
+            <p>Good: {stats.good}</p>
+            <p>Neutral: {stats.neutral}</p>
+            <p>Bad: {stats.bad}</p>
+            <p>All: {stats.all}</p>
+            <p>Average: {stats.average}</p>
+            <p>Positive: {stats.positive} %</p>
+        </div>
     )
 }
 const App = () => {
-    // save clicks of each button to its own state
-    const [good, setGood] = useState(0)
-    const [neutral, setNeutral] = useState(0)
-    const [bad, setBad] = useState(0)
-    const [all, setAll] = useState(0)
-    const [average, setAverage] = useState(0)
+    // save clicks of each button to state object
+    const [stats, setStats] = useState({
+        good: 0,
+        neutral: 0,
+        bad: 0,
+        all: 0,
+        average: 0,
+        positive: 0,
+    })
 
-    const handleGoodFeedback = () => {
-        setGood(good + 1)
-        updateTotal()
-        updateAverage(13)
+    const incrementGood = () => {
+        const newGood = stats.good + 1
+        const newAll = stats.all + 1
+        setStats({
+            ...stats,
+            good: newGood,
+            all: newAll,
+            average: ( (newGood * 1) + (stats.neutral * 0) + (stats.bad * -1)) / newAll,
+            positive: ( newGood / newAll ) * 100
+        })
     }
-    const handleNeutralFeedback = () => {
-        setNeutral(neutral + 1)
-        updateTotal()
-        updateAverage()
+    const incrementNeutral = () => {
+        const newNeutral = stats.neutral + 1
+        const newAll = stats.all + 1
+        setStats({
+            ...stats,
+            neutral: newNeutral,
+            all: newAll,
+            average: ( (stats.good * 1) + (newNeutral * 0) + (stats.bad * -1)) / newAll,
+            positive: ( stats.good / newAll ) * 100
+        })
     }
-    const handleBadFeedback = () => {
-        setBad(bad + 1)
-        updateTotal()
-        updateAverage()
-    }
-    const updateTotal = () => {
-        setAll(all + 1)
-    }
-    const updateAverage = (kusi) => {
-        setAverage(average + kusi)
+    const incrementBad = () => {
+        const newBad = stats.bad + 1
+        const newAll = stats.all + 1
+        setStats({
+            ...stats,
+            bad: newBad,
+            all: newAll,
+            average: ( (stats.good * 1) + (stats.neutral * 0) + (newBad * -1)) / newAll,
+            positive: ( stats.good / newAll ) * 100
+        })
     }
 
-    console.log(good, neutral, bad, all)
     return (
         <div>
             <h1>Give feedback</h1>
-            <Button text="good" onClick={handleGoodFeedback} />
-            <Button text="neutral" onClick={handleNeutralFeedback} />
-            <Button text="bad" onClick={handleBadFeedback} />
-            <h2>Statistics</h2>
-            <p>Good: {good}</p>
-            <p>Neutral: {neutral}</p>
-            <p>Bad: {bad}</p>
-            <p>All: {all}</p>
-            <Calculator label="Average" unit="" calc={( (good * 1) + (neutral * 0) + (bad * -1)) / all}/>
-            <Calculator label="Positive feedback" unit="%" calc={( good / all ) * 100 }/>
+            <Button text="good" onClick={incrementGood} />
+            <Button text="neutral" onClick={incrementNeutral} />
+            <Button text="bad" onClick={incrementBad} />
+            <Statistics stats={stats}/>
         </div>
     )
 }
