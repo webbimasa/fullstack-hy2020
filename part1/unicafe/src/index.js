@@ -9,33 +9,53 @@ const Button = ({text, onClick}) => {
 const Statistic = (props) => {
     if ( props.text === 'Positive' ) {
         return (
-            <div>
-                <p>{props.text}: {props.value} %</p>
-            </div>
+            <tr>
+                <td>{props.text}</td>
+                <td>{props.value} %</td>
+            </tr>
         )
     }
     return (
-        <p>{props.text}: {props.value}</p>
+        <tr>
+            <td>{props.text}</td>
+            <td>{props.value}</td>
+        </tr>
     )
 }
 const Statistics = ({stats}) => {
     if ( stats.all === 0 ) {
         return (
-            <div>
-                <h2>Statistics</h2>
-                <p>No feedback given</p>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Statistics</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>No feedback given</td>
+                    </tr>
+                </tbody>
+            </table>
         )
     }
     return (
         <div>
-            <h2>Statistics</h2>
-            <Statistic text="Good" value={stats.good}/>
-            <Statistic text="Neutral" value={stats.neutral}/>
-            <Statistic text="Bad" value={stats.bad}/>
-            <Statistic text="All" value={stats.all}/>
-            <Statistic text="Average" value={stats.average}/>
-            <Statistic text="Positive" value={stats.positive}/>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Statistics</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <Statistic text="Good" value={stats.good}/>
+                    <Statistic text="Neutral" value={stats.neutral}/>
+                    <Statistic text="Bad" value={stats.bad}/>
+                    <Statistic text="All" value={stats.all}/>
+                    <Statistic text="Average" value={stats.average}/>
+                    <Statistic text="Positive" value={stats.positive}/>
+                </tbody>
+            </table>
         </div>
     )
 }
