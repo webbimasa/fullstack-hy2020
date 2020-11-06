@@ -6,6 +6,16 @@ const Button = ({onClick, label}) => {
         <button onClick={onClick}>{label}</button>
     )
 }
+const MostVoted = ({votes}) => {
+    const mostVotes = votes.indexOf(Math.max(...votes))
+    return (
+        <div>
+            <h2>Anecdote with the most votes</h2>
+            <p>{anecdotes[mostVotes]}</p>
+            <p>has {votes[mostVotes]} votes</p>
+        </div>
+    )
+}
 
 const App = (props) => {
     const [selected, setSelected] = useState(0)
@@ -24,20 +34,19 @@ const App = (props) => {
         setSelected(random)
     }
     const voteAnecdote = () => {
-        console.log(votes)
-        console.log(selected)
         const copy = [...votes]
         copy[selected] += 1
-        console.log(copy)
         setVotes(copy)
     }
 
     return (
     <div>
+        <h1>Anecdote of the day</h1>
         <Button onClick={voteAnecdote} label="Vote" />
         <Button onClick={randomAnecdote} label="New anecdote" />
         <p>{props.anecdotes[selected]}</p>
         <p>has {votes[selected]} votes</p>
+        <MostVoted votes={votes}/>
     </div>
     )
 }
