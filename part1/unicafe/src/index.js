@@ -6,14 +6,14 @@ const Button = ({text, onClick}) => {
         <button onClick={onClick}>{text}</button>
     )
 }
-const Average = (props) => {
+const Calculator = (props) => {
     if (isNaN(props.calc)) {
         return (
-            <p>Average: 0</p>
+            <p>{props.label}: 0</p>
         )
     }
     return (
-        <p>Average: {props.calc}</p>
+        <p>{props.label}: {props.calc} {props.unit}</p>
     )
 }
 const App = () => {
@@ -58,7 +58,8 @@ const App = () => {
             <p>Neutral: {neutral}</p>
             <p>Bad: {bad}</p>
             <p>All: {all}</p>
-            <Average calc={( (good * 1) + (neutral * 0) + (bad * -1)) / all}/>
+            <Calculator label="Average" unit="" calc={( (good * 1) + (neutral * 0) + (bad * -1)) / all}/>
+            <Calculator label="Positive feedback" unit="%" calc={( good / all ) * 100 }/>
         </div>
     )
 }
