@@ -3,7 +3,6 @@ import Header from './header';
 import Content from './content';
 
 const Course = ({course}) => {
-    console.log(course)
     return (
         <div>
             <Header title={course.name}/>
