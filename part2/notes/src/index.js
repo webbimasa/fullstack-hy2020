@@ -26,6 +26,7 @@ const persons = [
     {
       id: 1,
       name: 'Arto Hellas',
+      number: '1234567890',
     }
 ]
 
