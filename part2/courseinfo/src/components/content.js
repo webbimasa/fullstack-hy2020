@@ -4,6 +4,7 @@ import Part from './part';
 const Content = ({content}) => {
     const exercisesInParts = content.map(part => part.exercises)
     const totalNumberOfExercises = exercisesInParts.reduce((total, exercisesInParts) => total + exercisesInParts)
+
     return (
         <div>
             {content.map(part =>
