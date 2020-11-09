@@ -7,7 +7,6 @@ import Countries from './Countries'
 const App = () => {
     const [countries, setCountries] = useState([])
     const [currentFilter, setFilter] = useState('')
-    const [showAll, setShowAll] = useState(true)
 
     const countriesToShow = currentFilter === ''
     ? countries

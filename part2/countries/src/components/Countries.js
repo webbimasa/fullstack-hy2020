@@ -5,14 +5,15 @@ const Countries = ({currentFilter, countries}) => {
     if (currentFilter !== '' && countries.length >= 10) {
         return (
             <div>
+                <p>Too many matches, specify the filter</p>
             </div>
         )
     }
-    if (currentFilter !== '' && countries.length <= 10 && countries.length > 1) {
+    if (currentFilter !== '' && countries.length <= 10 && countries.length >= 2) {
         return (
             <div>
                 {countries.map(country =>
-                    <Country key={country.name} country={country} style="basic"/>
+                    <Country key={country.name} country={country} />
                 )}
             </div>
         )
@@ -21,7 +22,7 @@ const Countries = ({currentFilter, countries}) => {
         return (
             <div>
                 {countries.map(country =>
-                    <Country key={country.name} country={country} style="complex"/>
+                    <Country key={country.name} country={country} full />
                 )}
             </div>
         )
@@ -36,7 +37,7 @@ const Countries = ({currentFilter, countries}) => {
     return (
         <div>
             {countries.map(country =>
-                <Country key={country.name} country={country} style="basic"/>
+                <Country key={country.name} country={country} />
             )}
         </div>
     )
