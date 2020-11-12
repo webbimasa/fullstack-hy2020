@@ -51,6 +51,20 @@ const App = () => {
         }
     }
 
+    const deleteEntry = (personToDelete, event) => {
+        event.preventDefault()
+        if (window.confirm(`Delete ${personToDelete.name}?`)) {
+            phonebookService
+            ._delete(personToDelete.id)
+            .then(response => {
+                setPersons(persons.filter(person => person.id !== personToDelete.id))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
+    }
+
     const handleName = (event) => {
         setNewName(event.target.value)
     }
@@ -81,7 +95,10 @@ const App = () => {
                 ]
             }/>
             <h2>Numbers</h2>
-            <Persons persons={personsToShow}/>
+            <Persons
+                persons={personsToShow}
+                handleDelete={deleteEntry}
+            />
         </div>
     )
 }
