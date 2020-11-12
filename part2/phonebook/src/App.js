@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import FilterForm from './components/FilterForm'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import phonebookService from './services/phonebook'
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [currentFilter, setFilter] = useState('')
+    const [notification, setNotificationMessage] = useState({})
 
     const newGUID = () => {
         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -46,6 +48,15 @@ const App = () => {
             .create(personObject)
             .then(response => {
                 setPersons(persons.concat(response.data))
+                setNotificationMessage(
+                    {
+                        message: `${newName} added`,
+                        style: 'success'
+                    }
+                )
+                setTimeout(() => {
+                    setNotificationMessage({})
+                }, 5000)
                 setNewName('')
                 setNewNumber('')
             })
@@ -59,6 +70,15 @@ const App = () => {
                 .update(matchingPerson.id, updatedPersonObject)
                 .then(response => {
                     setPersons(persons.map(person => person.id !== matchingPerson.id ? person : response.data))
+                    setNotificationMessage(
+                        {
+                            message: `${newName}'s phone number was updated`,
+                            style: 'success'
+                        }
+                    )
+                    setTimeout(() => {
+                        setNotificationMessage({})
+                    }, 5000)
                     setNewName('')
                     setNewNumber('')
                 })
@@ -73,9 +93,26 @@ const App = () => {
             ._delete(personToDelete.id)
             .then(response => {
                 setPersons(persons.filter(person => person.id !== personToDelete.id))
+                setNotificationMessage(
+                    {
+                        message: `${personToDelete.name} was deleted`,
+                        style: 'warning'
+                    }
+                )
+                setTimeout(() => {
+                    setNotificationMessage({})
+                }, 5000)
             })
             .catch(error => {
-                console.log(error)
+                setNotificationMessage(
+                    {
+                        message: `Some error occured`,
+                        style: 'warning'
+                    }
+                )
+                setTimeout(() => {
+                    setNotificationMessage({})
+                }, 5000)
             })
         }
     }
@@ -93,6 +130,7 @@ const App = () => {
     return (
         <div>
             <h1>Phonebook</h1>
+            <Notification notification={notification} />
             <FilterForm value={currentFilter} handleChange={handleFilter} />
             <h2>Add new</h2>
             <PersonForm handleSubmit={addNew} fields={
