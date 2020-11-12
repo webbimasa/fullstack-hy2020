@@ -10,6 +10,10 @@ const App = () => {
     const [newNumber, setNewNumber] = useState('')
     const [currentFilter, setFilter] = useState('')
 
+    const newGUID = () => {
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    }
+
     useEffect(() => {
         phonebookService
         .getAll()
@@ -31,13 +35,13 @@ const App = () => {
         }
 
         const personObject = {
-            id: persons.length + 1,
+            id: newGUID(),
             name: newName,
             number: newNumber,
         }
 
-        const matchingName = persons.find(o => o.name === newName)
-        if (matchingName === undefined) {
+        const matchingPerson = persons.find((person) => person.name === newName)
+        if (matchingPerson === undefined) {
             phonebookService
             .create(personObject)
             .then(response => {
@@ -46,8 +50,19 @@ const App = () => {
                 setNewNumber('')
             })
         } else {
-            alert(`${newName} has already been added to the phonebook`)
-            return
+            const updatedPersonObject = {
+                ...personObject,
+                number: newNumber,
+            }
+            if (window.confirm(`${newName} has already been added to the phonebook. Update number?`)) {
+                phonebookService
+                .update(matchingPerson.id, updatedPersonObject)
+                .then(response => {
+                    setPersons(persons.map(person => person.id !== matchingPerson.id ? person : response.data))
+                    setNewName('')
+                    setNewNumber('')
+                })
+            }
         }
     }
 
