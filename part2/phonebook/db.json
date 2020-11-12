@@ -1,16 +1,6 @@
 {
   "persons": [
     {
-      "id": 8,
-      "name": "Colman",
-      "number": "123"
-    },
-    {
-      "id": 15,
-      "name": "Eberto",
-      "number": "109-596-8246"
-    },
-    {
       "id": 16,
       "name": "Lesya",
       "number": "785-157-6557"

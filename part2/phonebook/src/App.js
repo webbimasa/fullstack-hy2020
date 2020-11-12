@@ -82,6 +82,17 @@ const App = () => {
                     setNewName('')
                     setNewNumber('')
                 })
+                .catch(error => {
+                    setNotificationMessage(
+                        {
+                            message: `${newName}'s information has already been deleted from the database`,
+                            style: 'warning'
+                        }
+                    )
+                    setTimeout(() => {
+                        setNotificationMessage({})
+                    }, 5000)
+                })
             }
         }
     }
