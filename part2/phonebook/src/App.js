@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import FilterForm from './FilterForm'
-import PersonForm from './PersonForm'
-import Persons from './Persons'
+import FilterForm from './components/FilterForm'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
+import phonebookService from './services/phonebook'
 
-const App = (props) => {
+const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [currentFilter, setFilter] = useState('')
 
     useEffect(() => {
-        axios
-        .get('http://localhost:3001/persons')
+        phonebookService
+        .getAll()
         .then(response => {
             setPersons(response.data)
         })
@@ -38,11 +38,10 @@ const App = (props) => {
 
         const matchingName = persons.find(o => o.name === newName)
         if (matchingName === undefined) {
-            axios
-            .post('http://localhost:3001/persons', personObject)
+            phonebookService
+            .create(personObject)
             .then(response => {
-                console.log(response)
-                setPersons(persons.concat(personObject))
+                setPersons(persons.concat(response.data))
                 setNewName('')
                 setNewNumber('')
             })
