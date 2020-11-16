@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
-const PersonForm = ({handleSubmit, fields}) => {
-  return (
+const PersonForm = ({ handleSubmit, fields }) => {
+    return (
 
         <form onSubmit={handleSubmit}>
             {fields.map(field =>

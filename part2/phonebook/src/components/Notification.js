@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
-const Notification = ({notification}) => {
+const Notification = ({ notification }) => {
     const componentStyles = ( notification.style === 'warning'
         ? {
             color: '#ff4f00',

@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
-const FilterForm = ({value, handleChange}) => {
+const FilterForm = ({ value, handleChange }) => {
     return (
         <div>
             Filter with:
