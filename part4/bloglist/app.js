@@ -22,17 +22,9 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('api/blogs', blogsRouter)
+app.use('/api/blogs', blogsRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
-
-app.get('/', (request, response) => {
-    response.send(`
-        <h1>Blog list blogsRouterlication</h1>
-    `)
-})
-
-const Blog = require('./models/blog')
 
 module.exports = app
